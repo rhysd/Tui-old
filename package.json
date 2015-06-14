@@ -20,8 +20,6 @@
   ],
   "scripts": {
     "preinstall": "node -e 'process.exit(0)'",
-    "test": "node script/test",
-    "run": "node script/run",
-    "clean": "node script/clean"
+    "run": "node script/run"
   }
 }
