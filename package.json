@@ -1,0 +1,27 @@
+{
+  "name": "tui",
+  "productName": "ツイッ",
+  "version": "0.0.1",
+  "description": "My first Twitter client",
+  "main": "./src/browser/main.js",
+  "author": "rhysd <lin90162@yahoo.co.jp>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rhysd/Tui.git"
+  },
+  "bugs": {
+    "url": "https://github.com/rhysd/Tui/issues"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "http://github.com/rhysd/Tui/raw/master/README.md"
+    }
+  ],
+  "scripts": {
+    "preinstall": "node -e 'process.exit(0)'",
+    "test": "node script/test",
+    "run": "node script/run",
+    "clean": "node script/clean"
+  }
+}
