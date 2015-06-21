@@ -1,21 +1,21 @@
-var tweets = [
-        {
-            icon: "../resources/inu.jpeg",
-            name: "@Linda_pp",
-            text: "ワンワン"
-        },
-        {
-            icon: "../resources/inu.jpeg",
-            name: "@Linda_pp",
-            text: "(U'w') I think this is a text"
-        },
-        {
-            icon: "../resources/inu.jpeg",
-            name: "@Linda_pp",
-            text: "WOW! foooooooooooooooooooooooooooooooooooooooooooooooooooooooooO!!!"
-        }
-    ];
+var Twitter = require('twitter');
+
+// TODO: Add config file (yaml?)
+var client = new Twitter({
+  consumer_key: '',
+  consumer_secret: '',
+  access_token_key: '',
+  access_token_secret: ''
+});
 
 function hometimeline() {
-    return tweets;
+    return new Promise(function(resolve){
+        client.get('statuses/home_timeline', {}, function(error, tweets, response){
+            if (!error) {
+                resolve(tweets);
+            } else {
+                console.log("error!");
+            }
+        });
+    });
 }
