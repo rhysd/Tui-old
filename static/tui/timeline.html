@@ -10,31 +10,14 @@
     </template>
   </template>
 
+  <script src="../../src/renderer/timeline.js">
+  </script>
   <script>
-    // Prepare variables
-    tweets = [
-            {
-              icon: "../resources/inu.jpeg",
-              name: "@Linda_pp",
-              text: "ワンワン"
-            },
-            {
-              icon: "../resources/inu.jpeg",
-              name: "@Linda_pp",
-              text: "(U'w') I think this is a text"
-            },
-            {
-              icon: "../resources/inu.jpeg",
-              name: "@Linda_pp",
-              text: "WOW! foooooooooooooooooooooooooooooooooooooooooooooooooooooooooO!!!"
-            }
-          ];
-
     Polymer({
-      is: "tui-timeline",
-      ready: function() {
-        this.tweets = tweets
-      }
+        is: "tui-timeline",
+        ready: function() {
+            this.tweets = hometimeline();
+        }
     });
   </script>
 </dom-module>
