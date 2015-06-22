@@ -19,6 +19,7 @@
     "tests"
   ],
   "dependencies": {
-    "paper-item": "PolymerElements/paper-item#^1.0.0"
+    "paper-item": "PolymerElements/paper-item#^1.0.0",
+    "paper-styles": "PolymerElements/paper-styles#^1.0.0"
   }
 }

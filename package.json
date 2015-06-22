@@ -2,7 +2,7 @@
   "name": "tui",
   "productName": "ツイッ",
   "version": "0.0.1",
-  "description": "My first Twitter client",
+  "description": "Timeline User Interfaces",
   "main": "./src/browser/main.js",
   "author": "rhysd <lin90162@yahoo.co.jp>",
   "repository": {
@@ -19,7 +19,8 @@
     }
   ],
   "dependencies": {
-    "twitter": "^1.2.5"
+    "twitter": "^1.2.5",
+    "js-yaml": "^3.3.1"
   },
   "scripts": {
     "preinstall": "node -e 'process.exit(0)'",
