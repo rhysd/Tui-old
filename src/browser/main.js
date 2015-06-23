@@ -3,6 +3,7 @@ var path = require('path');
 var BrowserWindow = require('browser-window');
 var config = require('./config.js').load(app.getPath('userData'));
 var ipc = require('ipc');
+var TwitterStream = require('./sources/twitter_stream.js');
 
 
 require('crash-reporter').start();
@@ -28,6 +29,18 @@ app.on('ready', function(){
 ipc.on('require-config', function(event, arg){ // Sync
     console.log('main: reply-config');
     event.returnValue = config;
+});
+
+var twitter_stream_receivers = [];
+ipc.on('require-twitter-stream', function(event){
+    twitter_stream_receivers.push(event.sender);
+});
+
+var stream = new TwitterStream('user');
+stream.subscribe(function(tweet){
+    for (var recv of twitter_stream_receivers) {
+        recv.send('twitter-stream', tweet);
+    }
 });
 // }}}
 

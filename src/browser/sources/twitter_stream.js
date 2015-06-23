@@ -5,14 +5,9 @@ var app = require('app');
 var config = require('../config.js');
 
 var client = null;
-var stream_connected = false;
 var subscribers = [];
 
 class TwitterStream {
-
-    static stream_connected() {
-        return stream_connected;
-    }
 
     static twitter_client() {
         if (client !== null) {
@@ -46,7 +41,7 @@ class TwitterStream {
         // Note: I can remove below using ES6 arrow function
         var self = this;
 
-        this.client.stream('user', {}, function(stream){
+        this.client.stream(this.path, {}, function(stream){
 
             stream.on('data', function(data){
                 if ('friends' in data) {
@@ -66,10 +61,11 @@ class TwitterStream {
         this.stream_connected = true;
     }
 
-    constructor() {
+    constructor(path) {
+        this.path = path;
         this.stream_connected = false;
         this.subscribers = [];
-        this.client = this.twitter_client();
+        this.client = TwitterStream.twitter_client();
     }
 
     subscribe(subscriber) {
