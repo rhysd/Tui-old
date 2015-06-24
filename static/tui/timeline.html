@@ -5,28 +5,46 @@
   <link rel="import" href="tweet.html">
 
   <template>
-    <template is="dom-repeat" items="{{tweets}}">
-      <tui-tweet tweet={{item}}></tui-tweet>
-    </template>
+    <div id="timeline">
+      <template is="dom-repeat" items="{{tweets}}">
+        <tui-tweet tweet={{item}}></tui-tweet>
+      </template>
+    </div>
   </template>
 
-  <script src="../../src/renderer/home_timeline.js">
+  <script src="../../src/renderer/twitter.js">
   </script>
+
   <script>
-      Polymer({
-          is: "tui-timeline",
-          ready: function() {
-              this.tweets = [];
-              var self = this;
-              on_tweet(function(tweet){
-                  console.log(tweet.text);
-                  self.tweets.push({
-                      icon: "../resources/inu.jpeg",
-                      name: "@" + tweet.user.screen_name,
-                      text: tweet.text
-                  });
-              });
-          }
-      });
+    Polymer({
+        is: "tui-timeline",
+
+        property: {
+            tweets: {
+                type: Array,
+                value: []
+            },
+        },
+
+        ready: function() {
+            var timeline = Polymer.dom(this.$.timeline);
+
+            // Note: I can remove 'self' using arrow functions in ES6.
+            var self = this;
+
+            on_tweet(function(tweet){
+                console.log(tweet.text);
+
+                var tw = document.createElement('tui-tweet');
+                tw.tweet = {
+                    icon: "../resources/inu.jpeg",
+                    name: "@" + tweet.user.screen_name,
+                    text: tweet.text
+                };
+
+                timeline.insertBefore(tw, timeline.firstChild);
+            });
+        },
+    });
   </script>
 </dom-module>
