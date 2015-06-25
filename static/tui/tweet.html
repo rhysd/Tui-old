@@ -7,6 +7,18 @@
   <link rel="import" href="../../bower_components/paper-styles/paper-styles.html">
 
   <style is="custom-style">
+    @font-face {
+      font-family: "Noto Sans CJK JP";
+      src: local('Noto Sans CJK JP'),
+           url(../../resources/fonts/NotoSansCJKjp-Light.woff) format('woff2'),
+           url(../../resources/fonts/NotoSansCJKjp-Light.otf) format('opentype');
+    }
+
+    @font-face {
+      font-family: "IPA P Gothic";
+      src: local('IPAPGothic');
+    }
+
     .item {
       background-color: white;
       @apply(--shadow-elevation-2dp);
@@ -24,9 +36,12 @@
     .date {
       float: right;
     }
+    .tweet_text {
+      font-family: "Noto Sans CJK JP", sans-serif;
+    }
   </style>
 
-  <template>
+  <template class="tweet_panel">
     <div class="item">
       <paper-icon-item>
         <img class="avatar" src="{{tweet.user.profile_image_url}}" item-icon></img>
@@ -35,7 +50,7 @@
             <span class="username" flex>@<span>{{tweet.user.screen_name}}</span></span>
             <span class="date">{{tweet.created_at}}</span>
           </div>
-          <div class="text">{{tweet.text}}</div>
+          <div class="tweet_text">{{tweet.text}}</div>
         </paper-item-body>
       </paper-icon-item>
     </div>
