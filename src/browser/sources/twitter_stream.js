@@ -59,7 +59,7 @@ class TwitterStream {
         this.client.stream(this.path, {}, function(stream){
 
             stream.on('data', function(data){
-                if ('friends' in data) {
+                if (data === undefined || 'friends' in data) {
                     return;
                 }
 
