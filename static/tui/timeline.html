@@ -36,11 +36,7 @@
                 console.log(tweet.text);
 
                 var tw = document.createElement('tui-tweet');
-                tw.tweet = {
-                    icon: "../resources/inu.jpeg",
-                    name: "@" + tweet.user.screen_name,
-                    text: tweet.text
-                };
+                tw.tweet = tweet;
 
                 timeline.insertBefore(tw, timeline.firstChild);
             });

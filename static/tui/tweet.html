@@ -18,15 +18,24 @@
       border-radius: 20%;
       overflow: hidden;
     }
+    .username {
+      float: left;
+    }
+    .date {
+      float: right;
+    }
   </style>
 
   <template>
     <div class="item">
       <paper-icon-item>
-        <img class="avatar" src="{{tweet.icon}}" item-icon></img>
+        <img class="avatar" src="{{tweet.user.profile_image_url}}" item-icon></img>
         <paper-item-body two-line>
-          <div secondary>{{tweet.name}}</div>
-          <div>{{tweet.text}}</div>
+          <div class="user" secondary layout horizontal flex>
+            <span class="username" flex>@<span>{{tweet.user.screen_name}}</span></span>
+            <span class="date">{{tweet.created_at}}</span>
+          </div>
+          <div class="text">{{tweet.text}}</div>
         </paper-item-body>
       </paper-icon-item>
     </div>
@@ -36,7 +45,7 @@
     Polymer({
       is: "tui-tweet",
       property: {
-        tweet: Object
+          tweet: Object
       }
     })
   </script>
