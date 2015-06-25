@@ -33,13 +33,28 @@ class TwitterStream {
         return client;
     }
 
-    connect_stream() {
+    connect_stream(opt) {
         if (this.stream_connected || this.client === null) {
             return;
         }
 
         // Note: I can remove below using ES6 arrow function
         var self = this;
+
+        if (opt !== undefined && 'fetch' in opt) {
+            this.client.get(opt.fetch, {}, function(err, tweets, response){
+                if (err) {
+                    console.error('twitter_stream: Fetch error: ' + response);
+                    return;
+                }
+
+                for (var t of tweets.reverse()) {
+                    for (var s of self.subscribers) {
+                        s(t);
+                    }
+                }
+            });
+        }
 
         this.client.stream(this.path, {}, function(stream){
 
@@ -70,9 +85,7 @@ class TwitterStream {
 
     subscribe(subscriber) {
         this.subscribers.push(subscriber);
-        this.connect_stream();
     }
-
 }
 
 module.exports = TwitterStream;

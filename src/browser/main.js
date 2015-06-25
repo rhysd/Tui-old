@@ -44,6 +44,7 @@ stream.subscribe(function(tweet){
         recv.send('twitter-stream', tweet);
     }
 });
+stream.connect_stream({fetch: 'statuses/home_timeline'});
 // }}}
 
 
