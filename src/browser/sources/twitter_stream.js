@@ -59,7 +59,12 @@ class TwitterStream {
         this.client.stream(this.path, {}, function(stream){
 
             stream.on('data', function(data){
-                if (data === undefined || 'friends' in data) {
+                if (data === undefined) {
+                    return;
+                }
+
+                if (!('text' in data)) {
+                    console.log('twitter_stream.js: non-tweet data: ' + JSON.stringify(data));
                     return;
                 }
 

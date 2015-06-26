@@ -33,7 +33,7 @@
             var self = this;
 
             on_tweet(function(tweet){
-                console.log(tweet.text);
+                console.log("new tweet: " + tweet.text);
 
                 var tw = document.createElement('tui-tweet');
                 tw.tweet = tweet;
