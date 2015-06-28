@@ -52,10 +52,12 @@
         <img class="avatar" src="{{tweet.user.profile_image_url}}" item-icon></img>
         <paper-item-body two-line>
           <div class="user" secondary layout horizontal flex>
-            <span class="username" flex>@<span>{{tweet.user.screen_name}}</span></span>
+            <a href$="{{user_url(tweet.user.screen_name)}}">
+              <span class="username" flex>@<span>{{tweet.user.screen_name}}</span></span>
+            </a>
             <span class="date">{{tweet.created_at}}</span>
           </div>
-          <div class="tweet_text">{{tweet.text}}</div>
+          <div class="tweet_text">{{make_text(tweet)}}</div>
         </paper-item-body>
       </paper-icon-item>
     </div>
@@ -67,6 +69,20 @@
 
       properties: {
         tweet: Object
+      },
+
+      user_url: function(screen_name) {
+        return 'https://twitter.com/' + screen_name;
+      },
+
+      make_text: function(tweet) {
+        // TODO: Change URLs in the tweet to links
+        var text = tweet.text;
+        console.log('entities: ' + JSON.stringify(tweet.entities));
+        for (var e of tweet.entities.urls) {
+          text = text.replace(e.url, e.expanded_url);
+        }
+        return text;
       }
     });
   </script>
