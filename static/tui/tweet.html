@@ -57,32 +57,81 @@
             </a>
             <span class="date">{{tweet.created_at}}</span>
           </div>
-          <div class="tweet_text">{{make_text(tweet)}}</div>
+          <div id="tweet_body" class="tweet_text"></div>
         </paper-item-body>
       </paper-icon-item>
     </div>
   </template>
 
+  <script src="../../src/renderer/tweet-scanner.js"></script>
+
   <script>
+    'use strict';
     Polymer({
       is: "tui-tweet",
 
       properties: {
-        tweet: Object
+        tweet: {
+          type: Object,
+          value: {}
+        }
       },
 
       user_url: function(screen_name) {
         return 'https://twitter.com/' + screen_name;
       },
 
-      make_text: function(tweet) {
-        // TODO: Change URLs in the tweet to links
-        var text = tweet.text;
-        console.log('entities: ' + JSON.stringify(tweet.entities));
-        for (var e of tweet.entities.urls) {
-          text = text.replace(e.url, e.expanded_url);
+      find: function(arr, pred) {
+        let len = arr.length;
+        for (let i = 0; i < len; i++) {
+          let val = arr[i];
+          if (pred(val)) {
+            return val;
+          }
         }
-        return text;
+        return undefined;
+      },
+
+      attached: function() {
+        let self = this;
+        this.async(function(){
+          let tweet_body = Polymer.dom(self.$.tweet_body);
+          let scanner = new TweetScanner(self.tweet.text);
+          let urls = self.tweet.entities.urls;
+
+          for (let token of scanner.eat_all()) {
+            switch (token.kind) {
+              case 'text': {
+                var child = document.createElement('span');
+                child.innerText = token.value;
+                break;
+              }
+              case 'url': {
+                var child = document.createElement('a');
+                let found = self.find(urls, function(u){ return u.url == token.value; });
+                if (found) {
+                  child.href = found.expanded_url;
+                  child.innerText = found.display_url;
+                } else {
+                  child.href = token.value;
+                  child.innerText = token.value;
+                }
+                break;
+              }
+              case 'screen_name': {
+                var child = document.createElement('a');
+                child.href = 'https://twitter.com/' + token.value.substr(1);
+                child.innerText = token.value;
+                break;
+              }
+              default:
+                // Error
+                break;
+            }
+
+            tweet_body.appendChild(child);
+          }
+        });
       }
     });
   </script>

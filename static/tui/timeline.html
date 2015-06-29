@@ -62,22 +62,22 @@
 
             var timeline = Polymer.dom(this.$.timeline);
 
-            // Note: I can remove 'self' using arrow functions in ES6.
-            var self = this;
+            // Note: I can remove 'that' using arrow functions in ES6.
+            var that = this;
 
             on_tweet_received(function(tweet){
                 var tw = document.createElement('tui-tweet');
                 tw.tweet = tweet;
 
                 timeline.insertBefore(tw, timeline.firstChild);
-                var average_height = self.$.timeline.clientHeight / timeline.childNodes.length;
 
-                if (!self.animation_enabled) {
+                if (!that.animation_enabled) {
                     return;
                 }
 
-                self.animationConfig['append'][0].transformFrom = 'translateY(-' + average_height + 'px)';
-                self.playAnimation('append');
+                var average_height = that.$.timeline.clientHeight / timeline.childNodes.length;
+                that.animationConfig['append'][0].transformFrom = 'translateY(-' + average_height + 'px)';
+                that.playAnimation('append');
             });
         }
     });

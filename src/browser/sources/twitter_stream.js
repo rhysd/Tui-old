@@ -39,7 +39,7 @@ class TwitterStream {
         }
 
         // Note: I can remove below using ES6 arrow function
-        var self = this;
+        var that = this;
 
         if (opt !== undefined && 'fetch' in opt) {
             this.client.get(opt.fetch, {}, function(err, tweets, response){
@@ -49,7 +49,7 @@ class TwitterStream {
                 }
 
                 for (var t of tweets.reverse()) {
-                    for (var s of self.subscribers) {
+                    for (var s of that.subscribers) {
                         s(t);
                     }
                 }
@@ -68,7 +68,7 @@ class TwitterStream {
                     return;
                 }
 
-                for (var s of self.subscribers) {
+                for (var s of that.subscribers) {
                     s(data);
                 }
             });
