@@ -22,8 +22,8 @@
     </div>
   </template>
 
-  <script src="../../src/renderer/twitter.js">
-  </script>
+  <script src="../../src/renderer/tweet-receiver.js"></script>
+  <script src="../../src/renderer/config.js"></script>
 
   <script>
     Polymer({
@@ -54,18 +54,27 @@
         },
 
         ready: function() {
+            try {
+                this.animation_enabled = get_config().timeline.animation;
+            } catch(e) {
+                this.animation_enabled = true;
+            }
+
             var timeline = Polymer.dom(this.$.timeline);
 
             // Note: I can remove 'self' using arrow functions in ES6.
             var self = this;
-            var tweets = [];
 
-            on_tweet(function(tweet){
+            on_tweet_received(function(tweet){
                 var tw = document.createElement('tui-tweet');
                 tw.tweet = tweet;
 
                 timeline.insertBefore(tw, timeline.firstChild);
                 var average_height = self.$.timeline.clientHeight / timeline.childNodes.length;
+
+                if (!self.animation_enabled) {
+                    return;
+                }
 
                 self.animationConfig['append'][0].transformFrom = 'translateY(-' + average_height + 'px)';
                 self.playAnimation('append');

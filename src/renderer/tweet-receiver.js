@@ -1,6 +1,7 @@
 var ipc = require('ipc');
 
 var callbacks = [];
+
 ipc.on('twitter-stream', function(tweet){
     var created_at = tweet.created_at;
     if (created_at !== undefined) {
@@ -14,6 +15,6 @@ ipc.on('twitter-stream', function(tweet){
 });
 ipc.send('require-twitter-stream');
 
-function on_tweet(callback) {
+function on_tweet_received(callback) {
     callbacks.push(callback);
 }
