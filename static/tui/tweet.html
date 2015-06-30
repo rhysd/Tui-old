@@ -97,7 +97,7 @@
         this.async(function(){
           let tweet_body = Polymer.dom(self.$.tweet_body);
           let scanner = new TweetScanner(self.tweet.text);
-          let urls = self.tweet.entities.urls;
+          const urls = self.tweet.entities.urls;
 
           for (let token of scanner.eat_all()) {
             switch (token.kind) {
@@ -108,7 +108,7 @@
               }
               case 'url': {
                 var child = document.createElement('a');
-                let found = self.find(urls, function(u){ return u.url == token.value; });
+                const found = self.find(urls, function(u){ return u.url == token.value; });
                 if (found) {
                   child.href = found.expanded_url;
                   child.innerText = found.display_url;

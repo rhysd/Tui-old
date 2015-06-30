@@ -7,7 +7,7 @@ var fs = require('fs');
 // customization
 
 module.exports.load = function(dir){
-    var file = path.join(dir, 'config.yml');
+    const file = path.join(dir, 'config.yml');
     try {
         return yaml.load(fs.readFileSync(file));
     } catch(e) {

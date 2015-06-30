@@ -26,6 +26,8 @@
   <script src="../../src/renderer/config.js"></script>
 
   <script>
+    'use strict';
+
     Polymer({
         is: "tui-timeline",
 
@@ -60,13 +62,13 @@
                 this.animation_enabled = true;
             }
 
-            var timeline = Polymer.dom(this.$.timeline);
+            let timeline = Polymer.dom(this.$.timeline);
 
             // Note: I can remove 'that' using arrow functions in ES6.
-            var that = this;
+            let that = this;
 
             on_tweet_received(function(tweet){
-                var tw = document.createElement('tui-tweet');
+                let tw = document.createElement('tui-tweet');
                 tw.tweet = tweet;
 
                 timeline.insertBefore(tw, timeline.firstChild);

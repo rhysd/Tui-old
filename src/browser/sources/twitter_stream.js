@@ -14,14 +14,14 @@ class TwitterStream {
             return client;
         }
 
-        var user_config = config.load(app.getPath('userData'));
+        const user_config = config.load(app.getPath('userData'));
         if (!('credentials' in user_config)) {
             console.error('twitter_stream.js: Invalid configuration: No \'credentials\' config is found/: ' + user_config);
             this.client = null;
             return;
         }
 
-        var keys = user_config.credentials;
+        const keys = user_config.credentials;
         client = new Twitter({
             consumer_key:        keys.consumer_key,
             consumer_secret:     keys.consumer_secret,
@@ -39,7 +39,7 @@ class TwitterStream {
         }
 
         // Note: I can remove below using ES6 arrow function
-        var that = this;
+        let that = this;
 
         if (opt !== undefined && 'fetch' in opt) {
             this.client.get(opt.fetch, {}, function(err, tweets, response){
@@ -48,8 +48,8 @@ class TwitterStream {
                     return;
                 }
 
-                for (var t of tweets.reverse()) {
-                    for (var s of that.subscribers) {
+                for (let t of tweets.reverse()) {
+                    for (let s of that.subscribers) {
                         s(t);
                     }
                 }
@@ -68,7 +68,7 @@ class TwitterStream {
                     return;
                 }
 
-                for (var s of that.subscribers) {
+                for (let s of that.subscribers) {
                     s(data);
                 }
             });

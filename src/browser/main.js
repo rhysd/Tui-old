@@ -1,3 +1,5 @@
+'use strict';
+
 var app = require('app');
 var path = require('path');
 var BrowserWindow = require('browser-window');
@@ -16,7 +18,7 @@ app.on('window-all-closed', function(){ app.quit(); });
 app.on('ready', function(){
     mainWindow = new BrowserWindow({width: 800, height: 600});
 
-    html = 'file://' + path.resolve(__dirname, '..', '..', 'static', 'index.html');
+    const html = 'file://' + path.resolve(__dirname, '..', '..', 'static', 'index.html');
     mainWindow.loadUrl(html);
 
     mainWindow.openDevTools();
@@ -40,7 +42,7 @@ ipc.on('require-twitter-stream', function(event){
 
 var stream = new TwitterStream('user');
 stream.subscribe(function(tweet){
-    for (var recv of twitter_stream_receivers) {
+    for (let recv of twitter_stream_receivers) {
         recv.send('twitter-stream', tweet);
     }
 });

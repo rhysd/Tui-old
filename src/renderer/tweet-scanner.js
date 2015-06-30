@@ -10,7 +10,7 @@ class TweetScanner {
     }
 
     eat() {
-        let m = this.text.match(/@\w+|https?:\/\/t.co\/\w+/);
+        const m = this.text.match(/@\w+|https?:\/\/t.co\/\w+/);
         if (m === null) {
             let ret = [{kind: 'text', value: this.text}];
             this.text = '';
