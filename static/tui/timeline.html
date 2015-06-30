@@ -55,6 +55,17 @@
             }
         },
 
+        playAppendAnimation: function() {
+            if (!this.animation_enabled) {
+                return;
+            }
+
+            const tl = this.$.timeline;
+            const average_height = tl.clientHeight / tl.childNodes.length;
+            this.animationConfig['append'][0].transformFrom = 'translateY(-' + average_height + 'px)';
+            this.playAnimation('append');
+        },
+
         ready: function() {
             try {
                 this.animation_enabled = get_config().timeline.animation;
@@ -73,13 +84,7 @@
 
                 timeline.insertBefore(tw, timeline.firstChild);
 
-                if (!that.animation_enabled) {
-                    return;
-                }
-
-                var average_height = that.$.timeline.clientHeight / timeline.childNodes.length;
-                that.animationConfig['append'][0].transformFrom = 'translateY(-' + average_height + 'px)';
-                that.playAnimation('append');
+                that.playAppendAnimation();
             });
         }
     });
