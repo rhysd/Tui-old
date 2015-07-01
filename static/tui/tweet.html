@@ -63,11 +63,11 @@
   <template class="tweet_panel">
     <div class="item">
       <paper-icon-item>
-        <img class="avatar" src="{{tweet.user.profile_image_url}}" item-icon></img>
+        <img class="avatar" src="{{profileImageURL(tweet)}}" item-icon></img>
         <paper-item-body two-line>
           <div class="user" secondary layout horizontal flex>
-            <a href$="{{userURL(tweet.user.screen_name)}}" class="user-link">
-              <span class="username" flex>@<span>{{tweet.user.screen_name}}</span></span>
+            <a href$="{{userURL(tweet)}}" class="user-link">
+              <span class="username" flex>@<span>{{screenName(tweet)}}</span></span>
             </a>
             <span class="date">{{formatCreatedAt(tweet)}}</span>
           </div>
@@ -90,18 +90,31 @@
       is: "tui-tweet",
 
       properties: {
-        tweet: {
-          type: Object,
-          value: {}
-        }
+        tweet: Object
       },
 
       isRetweet: function(tweet) {
         return 'retweeted_status' in tweet;
       },
 
-      userURL: function(screen_name) {
-        return 'https://twitter.com/' + screen_name;
+      statusOf: function(tweet) {
+        if ('retweeted_status' in tweet) {
+          return tweet.retweeted_status;
+        } else {
+          return tweet;
+        }
+      },
+
+      profileImageURL: function(tweet) {
+        return this.statusOf(tweet).user.profile_image_url;
+      },
+
+      screenName: function(tweet) {
+        return this.statusOf(tweet).user.screen_name;
+      },
+
+      userURL: function(tweet) {
+        return 'https://twitter.com/' + this.statusOf(tweet).user.screen_name;
       },
 
       find: function(arr, pred) {
@@ -121,14 +134,21 @@
         return `${fmt(d.getHours())}:${fmt(d.getMinutes())} ${d.getMonth()+1}/${d.getDate()} ${d.getYear() + 1900}`;
       },
 
+      unescapeHTML: function(text) {
+        let elem = document.createElement('span');
+        elem.innerHTML = text;
+        return elem.innerText;
+      },
+
       attached: function() {
         let that = this;
         this.async(function(){
+          const status = that.statusOf(that.tweet);
           let tweet_body = Polymer.dom(that.$.tweet_body);
-          let scanner = new TweetScanner(that.tweet.text);
-          const urls = that.tweet.entities.urls;
+          let scanner = new TweetScanner(that.unescapeHTML(status.text));
+          const urls = status.entities.urls;
 
-          for (let token of scanner.eat_all()) {
+          for (const token of scanner.eat_all()) {
             switch (token.kind) {
               case 'text': {
                 var child = document.createElement('span');
