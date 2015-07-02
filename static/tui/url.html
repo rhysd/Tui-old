@@ -14,8 +14,9 @@
     }
   </style>
 
-  <template>
-    <span on-click="clicked">
+  <template class="item">
+    <span class="link" on-click="clicked">
+      <span>{{text}}</span>
       <content></content>
       <paper-ripple></paper-ripple>
     </span>
@@ -29,7 +30,8 @@
       is: "tui-url",
 
       properties: {
-        url: String
+        url: String,
+        text: String
       },
 
       clicked: function() {

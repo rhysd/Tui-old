@@ -20,7 +20,8 @@
   ],
   "dependencies": {
     "twitter": "^1.2.5",
-    "js-yaml": "^3.3.1"
+    "js-yaml": "^3.3.1",
+    "open": "~0.0.5"
   },
   "scripts": {
     "preinstall": "node -e 'process.exit(0)'",

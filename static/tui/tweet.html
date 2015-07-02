@@ -71,8 +71,8 @@
         </tui-url>
         <paper-item-body two-line>
           <div class="user" secondary layout horizontal flex>
-            <tui-url class="user-link" url="{{userURL(tweet)}}" text="">{{screenName(tweet)}}</tui-url>
-            <tui-url class="date" url="{{statusURL(tweet)}}">{{formatCreatedAt(tweet)}}</tui-url>
+            <tui-url class="user-link" url="{{userURL(tweet)}}" text="{{screenName(tweet)}}"></tui-url>
+            <tui-url class="date" url="{{statusURL(tweet)}}" text={{formatCreatedAt(tweet)}}></tui-url>
           </div>
           <div id="tweet_body" class="tweet-text"></div>
           <template is="dom-if" if="{{isRetweet(tweet)}}">
@@ -181,10 +181,10 @@
                 const found = that.find(urls, function(u){ return u.url == token.value; });
                 if (found) {
                   child.url = found.expanded_url;
-                  child.firstChild.nextElementSibling.innerText = found.display_url;
+                  child.text = found.display_url;
                 } else {
                   child.url = token.value;
-                  child.firstChild.nextElementSibling.innerText = token.value;
+                  child.text = token.value;
                 }
                 child.id = "text-elem";
                 break;
@@ -192,7 +192,7 @@
               case 'screen_name': {
                 var child = document.createElement('tui-url');
                 child.url = 'https://twitter.com/' + token.value.substr(1);
-                child.firstChild.nextElementSibling.innerText = token.value;
+                child.text = token.value;
                 child.class = "user-link";
                 child.id = "text-elem";
                 break;
