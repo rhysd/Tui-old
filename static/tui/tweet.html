@@ -3,6 +3,7 @@
 <link rel="import" href="../../bower_components/paper-item/paper-icon-item.html">
 <link rel="import" href="../../bower_components/paper-item/paper-item-body.html">
 <link rel="import" href="../../bower_components/paper-styles/paper-styles.html">
+<link rel="import" href="url.html">
 
 <dom-module id="tui-tweet">
 
@@ -48,12 +49,16 @@
       font-family: "Noto Sans CJK JP", "Noto Sans Japanese", sans-serif;
       white-space: pre-wrap;
     }
-    a.user-link {
+    .user-link {
       color: gray;
     }
     .retweeted-by {
       color: gray;
       float: right;
+    }
+    #text-elem {
+      white-space: nowrap;
+      color: gray;
     }
   </style>
 
@@ -63,9 +68,7 @@
         <img class="avatar" src="{{profileImageURL(tweet)}}" item-icon></img>
         <paper-item-body two-line>
           <div class="user" secondary layout horizontal flex>
-            <a href$="{{userURL(tweet)}}" class="user-link">
-              <span class="username" flex>@<span>{{screenName(tweet)}}</span></span>
-            </a>
+            <tui-url class="user-link" url="{{userURL(tweet)}}" text="">{{screenName(tweet)}}</tui-url>
             <span class="date">{{formatCreatedAt(tweet)}}</span>
           </div>
           <div id="tweet_body" class="tweet-text"></div>
@@ -83,6 +86,7 @@
 
   <script>
     'use strict';
+
     Polymer({
       is: "tui-tweet",
 
@@ -107,7 +111,7 @@
       },
 
       screenName: function(tweet) {
-        return this.statusOf(tweet).user.screen_name;
+        return '@' + this.statusOf(tweet).user.screen_name;
       },
 
       userURL: function(tweet) {
@@ -131,6 +135,7 @@
         return `${fmt(d.getHours())}:${fmt(d.getMinutes())} ${d.getMonth()+1}/${d.getDate()} ${d.getYear() + 1900}`;
       },
 
+      // XXX
       unescapeHTML: function(text) {
         let elem = document.createElement('span');
         elem.innerHTML = text;
@@ -153,22 +158,24 @@
                 break;
               }
               case 'url': {
-                var child = document.createElement('a');
+                var child = document.createElement('tui-url');
                 const found = that.find(urls, function(u){ return u.url == token.value; });
                 if (found) {
-                  child.href = found.expanded_url;
-                  child.innerText = found.display_url;
+                  child.url = found.expanded_url;
+                  child.firstChild.nextElementSibling.innerText = found.display_url;
                 } else {
-                  child.href = token.value;
-                  child.innerText = token.value;
+                  child.url = token.value;
+                  child.firstChild.nextElementSibling.innerText = token.value;
                 }
+                child.id = "text-elem";
                 break;
               }
               case 'screen_name': {
-                var child = document.createElement('a');
-                child.href = 'https://twitter.com/' + token.value.substr(1);
-                child.innerText = token.value;
+                var child = document.createElement('tui-url');
+                child.url = 'https://twitter.com/' + token.value.substr(1);
+                child.firstChild.nextElementSibling.innerText = token.value;
                 child.class = "user-link";
+                child.id = "text-elem";
                 break;
               }
               default:

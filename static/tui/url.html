@@ -1,0 +1,32 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<dom-module id="tui-url">
+
+  <style is="custom-style">
+    .link {
+      cursor: pointer;
+    }
+  </style>
+
+  <template class="item">
+    <span class="link" on-click="clicked"><content></content></span>
+  </template>
+
+  <script>
+    'use strict';
+    let open = require('open');
+
+    Polymer({
+      is: "tui-url",
+
+      properties: {
+        url: String
+      },
+
+      clicked: function() {
+        open(this.url);
+      }
+    });
+  </script>
+</dom-module>
+
