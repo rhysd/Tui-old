@@ -70,12 +70,14 @@
         <paper-item-body two-line>
           <div class="user" secondary layout horizontal flex>
             <tui-url class="user-link" url="{{userURL(tweet)}}" text="">{{screenName(tweet)}}</tui-url>
-            <span class="date">{{formatCreatedAt(tweet)}}</span>
+            <tui-url class="date" url="{{statusURL(tweet)}}">{{formatCreatedAt(tweet)}}</tui-url>
           </div>
           <div id="tweet_body" class="tweet-text"></div>
           <template is="dom-if" if="{{isRetweet(tweet)}}">
             <div secondary layout horizontal flex>
-              <span class="retweeted-by"><i class="fa fa-retweet"></i> Retweeted by @<span>{{tweet.user.screen_name}}</span> <img class="retweeted-avatar" src="{{tweet.user.profile_image_url}}" item-icon></img></span>
+              <span class="retweeted-by">
+                <i class="fa fa-retweet"></i> Retweeted by <tui-url class="user-link" url="{{rawUserURL(tweet)}}">{{rawScreenName(tweet)}}</tui-url> <img class="retweeted-avatar" src="{{tweet.user.profile_image_url}}" item-icon></img>
+              </span>
             </div>
           </template>
         </paper-item-body>
@@ -117,6 +119,19 @@
 
       userURL: function(tweet) {
         return 'https://twitter.com/' + this.statusOf(tweet).user.screen_name;
+      },
+
+      statusURL: function(tweet) {
+        const status = this.statusOf(tweet);
+        return 'https://twitter.com/' + status.user.screen_name + '/status/' + status.id_str;
+      },
+
+      rawUserURL: function(tweet) {
+        return 'https://twitter.com/' + tweet.user.screen_name;
+      },
+
+      rawScreenName: function(tweet) {
+        return '@' + tweet.user.screen_name;
       },
 
       find: function(arr, pred) {
