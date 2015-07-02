@@ -8,6 +8,7 @@
 <dom-module id="tui-tweet">
 
   <link rel="stylesheet" href="../style/notosans.css">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 
   <!-- TODO: Enable to put fonts in config dir -->
 
@@ -74,7 +75,7 @@
           <div id="tweet_body" class="tweet-text"></div>
           <template is="dom-if" if="{{isRetweet(tweet)}}">
             <div secondary layout horizontal flex>
-              <span class="retweeted-by">Retweeted by @<span>{{tweet.user.screen_name}}</span> <img class="retweeted-avatar" src="{{tweet.user.profile_image_url}}" item-icon></img></span>
+              <span class="retweeted-by"><i class="fa fa-retweet"></i> Retweeted by @<span>{{tweet.user.screen_name}}</span> <img class="retweeted-avatar" src="{{tweet.user.profile_image_url}}" item-icon></img></span>
             </div>
           </template>
         </paper-item-body>
