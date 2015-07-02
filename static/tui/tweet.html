@@ -18,14 +18,11 @@
            url(../../resources/fonts/NotoSansCJKjp-Light.otf) format('opentype');
     }
 
-    @font-face {
-      font-family: "IPA P Gothic";
-      src: local('IPAPGothic');
-    }
-
     .item {
       background-color: white;
       @apply(--shadow-elevation-2dp);
+      padding: 0.5em;
+      border-bottom: 1px solid #e6e6e6;
     }
     .avatar {
       display: inline-block;
@@ -61,7 +58,7 @@
   </style>
 
   <template class="tweet_panel">
-    <div class="item">
+    <section class="item" layout horizontal>
       <paper-icon-item>
         <img class="avatar" src="{{profileImageURL(tweet)}}" item-icon></img>
         <paper-item-body two-line>
@@ -79,7 +76,7 @@
           </template>
         </paper-item-body>
       </paper-icon-item>
-    </div>
+    </section>
   </template>
 
   <script src="../../src/renderer/tweet-scanner.js"></script>
