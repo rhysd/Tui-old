@@ -56,14 +56,12 @@
             }
         },
 
-        playAppendAnimation: function() {
+        playAppendAnimation: function(offset) {
             if (!this.animation_enabled) {
                 return;
             }
 
-            const tl = this.$.timeline;
-            const average_height = tl.clientHeight / tl.childNodes.length;
-            this.animationConfig['append'][0].transformFrom = 'translateY(-' + average_height + 'px)';
+            this.animationConfig['append'][0].transformFrom = 'translateY(-' + offset + 'px)';
             this.playAnimation('append');
         },
 
@@ -84,9 +82,13 @@
                 let tw = document.createElement('tui-tweet');
                 tw.tweet = tweet;
 
+                const first = timeline.firstChild;
+                const before = first.offsetTop;
                 timeline.insertBefore(tw, timeline.firstChild);
+                const after = first.offsetTop;
+                const offset = before === undefined ? 0 : (after - before);
 
-                that.playAppendAnimation();
+                that.playAppendAnimation(offset);
             });
         }
     });
