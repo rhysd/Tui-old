@@ -2,15 +2,15 @@
 
 var ipc = require('ipc');
 
-var callbacks = [];
+var tweet_callbacks = [];
 
 ipc.on('twitter-stream', function(tweet){
-    for (let c of callbacks) {
+    for (let c of tweet_callbacks) {
         c(tweet);
     }
 });
 ipc.send('require-twitter-stream');
 
 function on_tweet_received(callback) {
-    callbacks.push(callback);
+    tweet_callbacks.push(callback);
 }

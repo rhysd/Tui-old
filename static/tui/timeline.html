@@ -24,6 +24,7 @@
 
   <script src="../../src/renderer/tweet-receiver.js"></script>
   <script src="../../src/renderer/config.js"></script>
+  <script src="../../src/renderer/key-input-receiver.js"></script>
 
   <script>
     'use strict';
@@ -67,6 +68,7 @@
         },
 
         ready: function() {
+            registerKeyinput("ctrl+a", function(input){ console.log("WOW! Such " + input + "!!"); });
             try {
                 this.animation_enabled = get_config().timeline.animation;
             } catch(e) {
