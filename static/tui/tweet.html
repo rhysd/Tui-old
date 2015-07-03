@@ -43,7 +43,7 @@
     .username {
       float: left;
     }
-    .date {
+    .tweet-info {
       float: right;
     }
     .tweet-text {
@@ -72,7 +72,10 @@
         <paper-item-body two-line>
           <div class="user" secondary layout horizontal flex>
             <tui-url class="user-link" url="{{userURL(tweet)}}" text="{{screenName(tweet)}}"></tui-url>
-            <tui-url class="date" url="{{statusURL(tweet)}}" text={{formatCreatedAt(tweet)}}></tui-url>
+            <tui-url class="tweet-info" url="{{statusURL(tweet)}}" text={{formatCreatedAt(tweet)}}></tui-url>
+            <template is="dom-if" if="{{isReply(tweet)}}">
+              <i class="fa fa-comment"></i>
+            </template>
           </div>
           <div id="tweet_body" class="tweet-text"></div>
           <template is="dom-if" if="{{isRetweet(tweet)}}">
@@ -135,6 +138,10 @@
 
       rawScreenName: function(tweet) {
         return '@' + tweet.user.screen_name;
+      },
+
+      isReply: function(tweet) {
+        return this.statusOf(tweet).in_reply_to_screen_name;
       },
 
       find: function(arr, pred) {
