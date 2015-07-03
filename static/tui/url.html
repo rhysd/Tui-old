@@ -1,15 +1,24 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-ripple/paper-ripple.html">
 
 <dom-module id="tui-url">
 
   <style is="custom-style">
-    .link {
+    :host {
       cursor: pointer;
+      user-select: none;
+      font: inherit;
+      background: transparent;
+      outline: none;
+      position: relative;
     }
   </style>
 
-  <template class="item">
-    <span class="link" on-click="clicked"><content></content></span>
+  <template>
+    <span on-click="clicked">
+      <content></content>
+      <paper-ripple></paper-ripple>
+    </span>
   </template>
 
   <script>

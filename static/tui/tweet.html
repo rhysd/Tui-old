@@ -3,6 +3,7 @@
 <link rel="import" href="../../bower_components/paper-item/paper-icon-item.html">
 <link rel="import" href="../../bower_components/paper-item/paper-item-body.html">
 <link rel="import" href="../../bower_components/paper-styles/paper-styles.html">
+<link rel="import" href="../../bower_components/paper-ripple/paper-ripple.html">
 <link rel="import" href="url.html">
 
 <dom-module id="tui-tweet">
@@ -27,7 +28,6 @@
       border-bottom: 1px solid #e6e6e6;
     }
     .avatar {
-      display: inline-block;
       width: 40px;
       height: 40px;
       border-radius: 20%;
@@ -66,7 +66,9 @@
   <template class="tweet_panel">
     <section class="item" layout horizontal>
       <paper-icon-item>
-        <img class="avatar" src="{{profileImageURL(tweet)}}" item-icon></img>
+        <tui-url url="{{userURL(tweet)}}" item-icon>
+          <img class="avatar" src="{{profileImageURL(tweet)}}"></img>
+        </tui-url>
         <paper-item-body two-line>
           <div class="user" secondary layout horizontal flex>
             <tui-url class="user-link" url="{{userURL(tweet)}}" text="">{{screenName(tweet)}}</tui-url>
@@ -76,7 +78,8 @@
           <template is="dom-if" if="{{isRetweet(tweet)}}">
             <div secondary layout horizontal flex>
               <span class="retweeted-by">
-                <i class="fa fa-retweet"></i> Retweeted by <tui-url class="user-link" url="{{rawUserURL(tweet)}}">{{rawScreenName(tweet)}}</tui-url> <img class="retweeted-avatar" src="{{tweet.user.profile_image_url}}" item-icon></img>
+                <i class="fa fa-retweet"></i> Retweeted by <tui-url class="user-link" url="{{rawUserURL(tweet)}}">{{rawScreenName(tweet)}}</tui-url>
+                <tui-url url="{{rawUserURL(tweet)}}"><img class="retweeted-avatar" src="{{tweet.user.profile_image_url}}" item-icon></img></tui-url>
               </span>
             </div>
           </template>
