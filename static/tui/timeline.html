@@ -8,12 +8,6 @@
 
 <dom-module id="tui-timeline">
 
-  <style is="custom-style">
-    .try {
-      opacity: 0.0;
-    }
-  </style>
-
   <template>
     <div id="timeline">
       <template is="dom-repeat" items="{{tweets}}">
@@ -66,7 +60,6 @@
         },
 
         ready: function() {
-            registerKeyinput("ctrl+a", function(input){ console.log("WOW! Such " + input + "!!"); });
             try {
                 this.animation_enabled = get_config().timeline.animation;
             } catch(e) {
